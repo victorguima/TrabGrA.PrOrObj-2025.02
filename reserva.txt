@@ -1,0 +1,4 @@
+1;3;Vilson Schweppes;1;A
+1;3;Lola Guterres;2;A
+5;9;Cleomar Rodrigues;3;C
+7;8;Tamires Leonidas;6;I
