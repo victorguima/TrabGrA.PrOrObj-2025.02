@@ -5,9 +5,14 @@ public class Quarto {
     private char categoria;
     private float diaria;
     private int consumo[];
+    private int nConsumo; //contador para o número de itens consumidos
 
-    Quarto(){
-
+    Quarto(){ //inicializa os atributos com valores nulos só pra garantir
+        this.numero=0;
+        this.categoria=' ';
+        this.diaria=0;
+        this.consumo=new int[5]; //inicializa o vetor consumo com limite 5
+        this.nConsumo=0;
     }
 
 
@@ -21,7 +26,8 @@ public class Quarto {
         return this.diaria;
     }
     public int[] getConsumo() {
-        return this.consumo;
+        int[] itensConsumidos = Arrays.copyOf(this.consumo, this.nConsumo); //Copia apenas os itens consumidos
+        return itensConsumidos; //retorna um vetor com os itens consumidos
     }
     public void setNumero(int numero) {
         this.numero = numero;
@@ -34,6 +40,18 @@ public class Quarto {
     }
     public void setConsumo(int[] consumo) {
         this.consumo = consumo;
+    }
+    public void adicionaConsumo(int codigoProduto) {
+        if(this.nConsumo < this.consumo.length) { //verifica se há espaço no vetor
+            this.consumo[this.nConsumo] = codigoProduto; //adiciona o código do produto no vetor
+            this.nConsumo++; //incrementa o contador de itens consumidos
+        } else {
+            if (this.nConsumo == this.consumo.length) { //se o vetor estiver cheio
+                consumo = Arrays.copyOf(this.consumo, nConsumo*2); //redimensiona o vetor consumo para o dobro do tamanho
+                this.consumo[this.nConsumo] = codigoProduto; //adiciona o código do produto no vetor
+                this.nConsumo++; //incrementa o contador de itens consumidos
+            }
+        }
     }
 
     @Override

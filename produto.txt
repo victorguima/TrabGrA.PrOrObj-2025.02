@@ -1,2 +1,2 @@
-001;Coca-Cola 2l;10
-002;Pepsi 2l;10
+1;Coca-Cola 2l;10
+2;Pepsi 2l;10
