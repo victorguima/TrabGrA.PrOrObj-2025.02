@@ -4,7 +4,6 @@ public class Reserva {
     private String cliente;
     private Quarto quarto;
     private char status; //A - Ativa, C - Cancelada, F - Finalizada
-    private int nReservas; //contador para o número de reservas
 
     Reserva(int diaInicio, int diaFim, String cliente, Quarto quarto, char status){
         this.diaInicio=0;
@@ -12,7 +11,6 @@ public class Reserva {
         this.cliente="";
         this.quarto=new Quarto();
         this.status=' ';
-        this.nReservas++;
     }
     Reserva(){}
 
@@ -46,14 +44,11 @@ public class Reserva {
     public void setStatus(char status) {
         this.status = status;
     }
-    public void setnReservas(int nReservas) {
-        this.nReservas = nReservas;
-    }
 
     @Override
     public String toString() {
         return "Reserva [cliente=" + this.cliente + ", diaFim=" + this.diaFim + ", diaInicio=" + this.diaInicio
-                + ", quarto=" + this.quarto + ", status=" + this.status + "]";
+                + ", quarto=" + this.quarto.getNumero() + ", status=" + this.status + "]";
     }
 
 }

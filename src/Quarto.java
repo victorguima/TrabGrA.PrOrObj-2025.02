@@ -56,7 +56,7 @@ public class Quarto {
 
     @Override
     public String toString() {
-        return "Quarto [categoria=" + this.categoria + ", consumo=" + Arrays.toString(this.consumo) + ", diaria=" + this.diaria
-                + ", numero=" + this.numero + "]";
+        return "Quarto " + this.numero + ":" + "[categoria=" + this.categoria + ", consumo=" + 
+        Arrays.toString(this.consumo) + ", diaria=" + this.diaria + "]";
     }
 }

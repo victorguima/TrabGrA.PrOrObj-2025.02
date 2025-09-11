@@ -27,4 +27,9 @@ public class Produto {
     public void setPreco(float preco) {
         this.preco = preco;
     }
+
+    @Override
+    public String toString() {
+        return "Produto [codigo=" + this.codigo + ", nome=" + this.nome + ", preco=" + this.preco + "]";
+    }
 }
