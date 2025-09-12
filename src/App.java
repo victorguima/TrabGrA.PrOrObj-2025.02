@@ -29,7 +29,12 @@ public class App {
             scanner.nextLine(); //consome a quebra de linha deixada pelo nextInt() //TODO: Perguntar se existe alternativa porque foi o chatgpt que sugeriu
             switch (codigo) {
                 case 1:
-
+                    System.out.println("Digite o dia (1-31):");
+                        int dia = scanner.nextInt();
+                        System.out.println("Digite o número do quarto:");
+                        int numQuarto = scanner.nextInt();
+                        scanner.nextLine();
+                        pousada.consultaDisponibilidade(dia, numQuarto);
                     break;
                 case 7:
                     System.out.println("Clientes com reservas ativas:");

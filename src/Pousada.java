@@ -54,16 +54,16 @@ public class Pousada {
             if(arqPousada.exists()){ //verifica se o arquivo existe
                 BufferedReader brPousadaTxt = new BufferedReader(new FileReader(arqPousada));
                 String[] dados = brPousadaTxt.readLine().split(";");//Divide os atributos separados por ; e coloca em um vetor de strings
-                setNome(dados[0]); //primeiro atributo é o nome
-                setContato(dados[1]);//segundo atributo é o telefone de contato
-                this.nQuartos = brPousadaTxt.readLine().split(";").length; //lê a segunda linha do arquivo para contar o número de quartos
+                setNome(dados[0]); //primeiro atributo Ã© o nome
+                setContato(dados[1]);//segundo atributo Ã© o telefone de contato
+                this.nQuartos = brPousadaTxt.readLine().split(";").length; //lÃª a segunda linha do arquivo para contar o nÃºmero de quartos
                 carregaQuartos();
                 carregaReservas();
                 carregaProdutos();
                 System.out.println("Pousada carregada com sucesso.");
                 brPousadaTxt.close();
             } else {
-                System.out.println("Arquivo da pousada não encontrado.");
+                System.out.println("Arquivo da pousada nÃ£o encontrado.");
             }
         } catch (Exception e) {
             System.out.println("Erro ao acessar arquivo da pousada.");
@@ -83,14 +83,14 @@ public class Pousada {
                 }
                 String Reserva_atributos[]=linha.split(";");//Divide os atributos separados por ; e coloca em um vetor de strings
                 this.reservas = new Reserva[5];//inicializa o vetor de reservas com limite 5
-                int nReservas=0; //contador para o número de reservas lidas
+                int nReservas=0; //contador para o nÃºmero de reservas lidas
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.reservas.length; i++) {
-                    this.reservas[i]=new Reserva(); //TODO: Perguntar porque não funciona sem isso
+                    this.reservas[i]=new Reserva(); //TODO: Perguntar porque nÃ£o funciona sem isso
                     this.reservas[i].setDiaInicio(Integer.parseInt(Reserva_atributos[j++]));
                     this.reservas[i].setDiaFim(Integer.parseInt(Reserva_atributos[j++]));
                     this.reservas[i].setCliente(Reserva_atributos[j++]);
-                    for(Quarto q: this.quartos){ //Procura o quarto correspondente ao número lido
+                    for(Quarto q: this.quartos){ //Procura o quarto correspondente ao nÃºmero lido
                         if(q.getNumero() == Integer.parseInt(Reserva_atributos[j])){
                             this.reservas[i].setQuarto(q);
                             this.reservas[i].setStatus(Reserva_atributos[++j].charAt(0));
@@ -101,17 +101,17 @@ public class Pousada {
                     if(nReservas == this.reservas.length){ //se o vetor estiver cheio
                         this.reservas = Arrays.copyOf(this.reservas, nReservas*2); //redimensiona o vetor reservas para o dobro do tamanho
                     }
-                    linha=brReservasTxt.readLine();//tenta ler a próxima linha do arquivo
+                    linha=brReservasTxt.readLine();//tenta ler a prÃ³xima linha do arquivo
                     if(linha==null) break; //se a linha for nula, sai do loop
                     else Reserva_atributos=linha.split(";");
                     j=0;
                 }
-                this.reservas = Arrays.copyOf(this.reservas, nReservas); //ajusta o tamanho do vetor ao número de reservas lidas
+                this.reservas = Arrays.copyOf(this.reservas, nReservas); //ajusta o tamanho do vetor ao nÃºmero de reservas lidas
                 System.out.println("Reservas carregadas com sucesso.");
                 brReservasTxt.close();
             }
             else{
-                System.out.println("Arquivo de reservas não encontrado.");
+                System.out.println("Arquivo de reservas nÃ£o encontrado.");
             }
         }catch(Exception e){   
             System.out.println("Erro ao acessar arquivo de reservas.");
@@ -130,14 +130,14 @@ public class Pousada {
                     return;
                 }
                 String Quarto_atributos[]=linha.split(";");//Divide os atributos separados por ; e coloca em um vetor de strings
-                this.quartos = new Quarto[this.nQuartos];//inicializa o vetor de quartos com o número de quartos lido
+                this.quartos = new Quarto[this.nQuartos];//inicializa o vetor de quartos com o nÃºmero de quartos lido
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.nQuartos; i++) {
-                    this.quartos[i]=new Quarto(); //TODO: Perguntar porque não funciona sem isso
+                    this.quartos[i]=new Quarto(); //TODO: Perguntar porque nÃ£o funciona sem isso
                     this.quartos[i].setNumero(Integer.parseInt(Quarto_atributos[j++]));
                     this.quartos[i].setCategoria(Quarto_atributos[j++].charAt(0));
                     this.quartos[i].setDiaria(Float.parseFloat(Quarto_atributos[j++]));
-                    linha=brQuartosTxt.readLine();//tenta ler a próxima linha do arquivo
+                    linha=brQuartosTxt.readLine();//tenta ler a prÃ³xima linha do arquivo
                     if(linha==null) break; //se a linha for nula, sai do loop
                     else Quarto_atributos=linha.split(";");
                     j=0;
@@ -146,7 +146,7 @@ public class Pousada {
                 brQuartosTxt.close();
             }
             else{
-                System.out.println("Arquivo de quartos não encontrado.");
+                System.out.println("Arquivo de quartos nÃ£o encontrado.");
             }
         }catch(Exception e){   
             System.out.println("Erro ao acessar arquivo de quartos.");
@@ -166,10 +166,10 @@ public class Pousada {
                 }
                 String Produto_atributos[]=linha.split(";");//Divide os atributos separados por ; e coloca em um vetor de strings
                 this.produtos = new Produto[5];//inicializa o vetor de produtos com limite 5
-                int nProdutos=0; //contador para o número de produtos lidos
+                int nProdutos=0; //contador para o nÃºmero de produtos lidos
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.produtos.length; i++) {
-                    this.produtos[i]=new Produto(); //TODO: Perguntar porque não funciona sem isso
+                    this.produtos[i]=new Produto(); //TODO: Perguntar porque nÃ£o funciona sem isso
                     this.produtos[i].setCodigo(Integer.parseInt(Produto_atributos[j++]));
                     this.produtos[i].setNome(Produto_atributos[j++]);
                     this.produtos[i].setPreco(Float.parseFloat(Produto_atributos[j++]));
@@ -177,22 +177,51 @@ public class Pousada {
                     if(nProdutos == this.produtos.length){ //se o vetor estiver cheio
                         this.produtos = Arrays.copyOf(this.produtos, nProdutos*2); //redimensiona o vetor produtos para o dobro do tamanho
                     }
-                    linha=brProdutosTxt.readLine();//tenta ler a próxima linha do arquivo
+                    linha=brProdutosTxt.readLine();//tenta ler a prÃ³xima linha do arquivo
                     if(linha==null) break; //se a linha for nula, sai do loop
                     else Produto_atributos=linha.split(";");
                     j=0;
                 }
-                this.produtos = Arrays.copyOf(this.produtos, nProdutos); //ajusta o tamanho do vetor ao número de produtos lidos
+                this.produtos = Arrays.copyOf(this.produtos, nProdutos); //ajusta o tamanho do vetor ao nÃºmero de produtos lidos
                 System.out.println("Produtos carregados com sucesso.");
                 brProdutosTxt.close();
             }
             else{
-                System.out.println("Arquivo de produtos não encontrado.");
+                System.out.println("Arquivo de produtos nÃ£o encontrado.");
             }
         }catch(Exception e){   
             System.out.println("Erro ao acessar arquivo de produtos.");
             e.printStackTrace();
         }
+    }
+    
+    public boolean consultaDisponibilidade(int data, int numeroQuarto) {
+        Quarto quartoEncontrado = null;
+        for (Quarto q : this.quartos) {
+            if (q.getNumero() == numeroQuarto) {
+                quartoEncontrado = q;
+                break;
+            }
+        }
+        
+        if (quartoEncontrado == null) {
+            System.out.println("Quarto não encontrado.");
+            return false;
+        }
+        
+        for (Reserva r : this.reservas) {
+            if (r.getQuarto().getNumero() == numeroQuarto && 
+                (r.getStatus() == 'A' || r.getStatus() == 'I') &&
+                data >= r.getDiaInicio() && data <= r.getDiaFim()) {
+                System.out.println("Quarto ocupado nesta data.");
+                return false;
+            }
+        }
+        
+        System.out.println("Quarto " + quartoEncontrado.getNumero() + 
+                           " - Categoria: " + quartoEncontrado.getCategoria() + 
+                           " - Diária: R$" + quartoEncontrado.getDiaria());
+        return true;
     }
 
 
