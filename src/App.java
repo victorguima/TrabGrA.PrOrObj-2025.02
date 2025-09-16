@@ -34,7 +34,7 @@ public class App {
                 case 7:
                     System.out.println("Clientes que já fizeram check-in:");
                     for(Reserva r : pousada.getReservas()){
-                        if(r.getStatus()=='I') //Mostra apenas reservas com check-in realizado TESTE
+                        if(r.getStatus()=='I') //Mostra apenas reservas com check-in realizado TESTE AAAA
                             System.out.println(r.getCliente()+" - Quarto "+r.getQuarto().getNumero() + ", de dias "+r.getDiaInicio()+" a "+r.getDiaFim());
                     }
                     System.out.println("Digite o nome do cliente:");
