@@ -13,8 +13,8 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         int codigo=0;
         do{
-            System.out.println("Bem vindo Ã  Pousada Pou Usada!");
-            System.out.println("Selecione a opÃ§Ã£o desejada: MÃŠS:DEZEMBRO/2025");
+            System.out.println("Bem vindo à Pousada Pou Usada!");
+            System.out.println("Selecione a opção desejada: MÊS:DEZEMBRO/2025");
             System.out.println("1 - Consultar Disponibilidade");
             System.out.println("2 - Consultar Reserva");
             System.out.println("3 - Realizar Reserva");
@@ -24,7 +24,7 @@ public class App {
             System.out.println("7 - Registrar Consumo");
             System.out.println("8 - Salvar"); 
             System.out.println("0 - Sair");
-            System.out.printf("Digite o nÃºmero da opÃ§Ã£o: ");
+            System.out.printf("Digite o número da opção: ");
             codigo=scanner.nextInt();
             scanner.nextLine();
             switch (codigo) {
@@ -55,7 +55,7 @@ public class App {
                             for(Produto p: pousada.getProdutos()){
                                 System.out.println(p.toString());
                             }
-                            System.out.println("Digite o cÃ³digo do produto consumido:");
+                            System.out.println("Digite o código do produto consumido:");
                             int codProduto = scanner.nextInt();
                             r.getQuarto().adicionaConsumo(codProduto);
                             System.out.println("Consumo registrado com sucesso!");
@@ -63,7 +63,7 @@ public class App {
                         }
                     }
                     if(!clienteEncontrado){
-                        System.out.println("Cliente nÃ£o encontrado.");
+                        System.out.println("Cliente não encontrado.");
                     }
                     break;
             
