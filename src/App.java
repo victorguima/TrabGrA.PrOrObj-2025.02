@@ -44,6 +44,8 @@ public class App {
                 case 7:
                     System.out.println("Clientes com reservas ativas:");
                     for(Reserva r : pousada.getReservas()){
+                        if(r.getStatus()=='I') //Mostra apenas reservas com check-in realizado TESTE
+                            System.out.println(r.getCliente()+" - Quarto "+r.getQuarto().getNumero() + ", de dias "+r.getDiaInicio()+" a "+r.getDiaFim());
                         if(r.getStatus()=='A')
                             System.out.println(r.getCliente());
                     }
