@@ -3,7 +3,7 @@ public class Reserva {
     private int diaFim;
     private String cliente;
     private Quarto quarto;
-    private char status; //A - Ativa, C - Cancelada, F - Finalizada
+    private char status; //A - Ativa, C - Cancelada, I - Realizou Check-in, O - Realizou Check-out
 
     Reserva(int diaInicio, int diaFim, String cliente, Quarto quarto, char status){
         this.diaInicio=0;
