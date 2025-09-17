@@ -10,7 +10,6 @@ public class Pousada {
     private Produto[] produtos;
     private int nQuartos;
 
-
     Pousada(){
         this.nome="NULO";
         this.contato="NULO";
@@ -48,6 +47,126 @@ public class Pousada {
     public void setProdutos(Produto[] produtos) {
         this.produtos = produtos;
     }
+
+    public boolean consultaDisponibilidade(int data, int numeroQuarto) {
+        for (Reserva r : this.reservas) {
+            if (r.getQuarto().getNumero() == numeroQuarto && 
+                (r.getStatus() == 'A' || r.getStatus() == 'I') &&
+                data >= r.getDiaInicio() && data <= r.getDiaFim()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Reserva[] consultaReserva(int data, String cliente, int numeroQuarto) {
+        Reserva[] resultados = new Reserva[10];
+        int count = 0;
+        
+        for (Reserva r : this.reservas) {
+            if (r.getStatus() == 'A') {
+                boolean corresponde = true;
+                
+                if (data < r.getDiaInicio() || data > r.getDiaFim()) {
+                    corresponde = false;
+                }
+                
+                if (!r.getCliente().equalsIgnoreCase(cliente)) {
+                    corresponde = false;
+                }
+                
+                if (r.getQuarto().getNumero() != numeroQuarto) {
+                    corresponde = false;
+                }
+                
+                if (corresponde) {
+                    if (count < resultados.length) {
+                        resultados[count] = r;
+                        count++;
+                    } else {
+                        Reserva[] novoArray = Arrays.copyOf(resultados, resultados.length * 2);
+                        novoArray[count] = r;
+                        resultados = novoArray;
+                        count++;
+                    }
+                }
+            }
+        }
+        
+        return Arrays.copyOf(resultados, count);
+    }
+
+    public boolean realizaReserva(int diaInicio, int diaFim, String cliente, int numeroQuarto) {
+        Quarto quartoDesejado = null;
+        for (Quarto q : this.quartos) {
+            if (q.getNumero() == numeroQuarto) {
+                quartoDesejado = q;
+                break;
+            }
+        }
+        
+        if (quartoDesejado == null) {
+            return false;
+        }
+
+        for (Reserva r : this.reservas) {
+            if (r.getCliente().equals(cliente) && 
+                (r.getStatus() == 'A' || r.getStatus() == 'I')) {
+                return false;
+            }
+        }
+
+        for (int dia = diaInicio; dia <= diaFim; dia++) {
+            if (!consultaDisponibilidade(dia, numeroQuarto)) {
+                return false;
+            }
+        }
+
+        Reserva novaReserva = new Reserva();
+        novaReserva.setDiaInicio(diaInicio);
+        novaReserva.setDiaFim(diaFim);
+        novaReserva.setCliente(cliente);
+        novaReserva.setQuarto(quartoDesejado);
+        novaReserva.setStatus('A');
+
+        if (this.reservas == null) {
+            this.reservas = new Reserva[1];
+            this.reservas[0] = novaReserva;
+        } else {
+            boolean adicionada = false;
+            for (int i = 0; i < this.reservas.length; i++) {
+                if (this.reservas[i] == null) {
+                    this.reservas[i] = novaReserva;
+                    adicionada = true;
+                    break;
+                }
+            }
+            
+            if (!adicionada) {
+                Reserva[] novoArray = Arrays.copyOf(this.reservas, this.reservas.length + 1);
+                novoArray[this.reservas.length] = novaReserva;
+                this.reservas = novoArray;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean cancelaReserva(String cliente) {
+        if (this.reservas == null) {
+            return false;
+        }
+        
+        for (Reserva r : this.reservas) {
+            if (r != null && r.getCliente().equalsIgnoreCase(cliente) && r.getStatus() == 'A') {
+                r.setStatus('C'); // Muda o status para Cancelada
+                return true;
+            }
+        }
+        
+        return false; // Não encontrou reserva ativa para o cliente
+    }
+
     public void carregaDados(){
         File arqPousada = new File("pousada.txt");
         try {
@@ -86,7 +205,7 @@ public class Pousada {
                 int nReservas=0; //contador para o número de reservas lidas
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.reservas.length; i++) {
-                    this.reservas[i]=new Reserva();
+                    this.reservas[i]=new Reserva(); //TODO: Perguntar porque não funciona sem isso
                     this.reservas[i].setDiaInicio(Integer.parseInt(Reserva_atributos[j++]));
                     this.reservas[i].setDiaFim(Integer.parseInt(Reserva_atributos[j++]));
                     this.reservas[i].setCliente(Reserva_atributos[j++]);
@@ -133,7 +252,7 @@ public class Pousada {
                 this.quartos = new Quarto[this.nQuartos];//inicializa o vetor de quartos com o número de quartos lido
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.nQuartos; i++) {
-                    this.quartos[i]=new Quarto();
+                    this.quartos[i]=new Quarto(); //TODO: Perguntar porque não funciona sem isso
                     this.quartos[i].setNumero(Integer.parseInt(Quarto_atributos[j++]));
                     this.quartos[i].setCategoria(Quarto_atributos[j++].charAt(0));
                     this.quartos[i].setDiaria(Float.parseFloat(Quarto_atributos[j++]));
@@ -169,7 +288,7 @@ public class Pousada {
                 int nProdutos=0; //contador para o número de produtos lidos
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.produtos.length; i++) {
-                    this.produtos[i]=new Produto();
+                    this.produtos[i]=new Produto(); //TODO: Perguntar porque não funciona sem isso
                     this.produtos[i].setCodigo(Integer.parseInt(Produto_atributos[j++]));
                     this.produtos[i].setNome(Produto_atributos[j++]);
                     this.produtos[i].setPreco(Float.parseFloat(Produto_atributos[j++]));
@@ -194,6 +313,4 @@ public class Pousada {
             e.printStackTrace();
         }
     }
-
-
 }

@@ -6,12 +6,13 @@ public class Reserva {
     private char status; //A - Ativa, C - Cancelada, I - Realizou Check-in, O - Realizou Check-out
 
     Reserva(int diaInicio, int diaFim, String cliente, Quarto quarto, char status){
-        this.diaInicio=0;
-        this.diaFim=0;
-        this.cliente="";
-        this.quarto=new Quarto();
-        this.status=' ';
+        this.diaInicio = diaInicio;
+        this.diaFim = diaFim;
+        this.cliente = cliente;
+        this.quarto = quarto;
+        this.status = status;
     }
+
     Reserva(){}
 
     public int getDiaInicio() {
@@ -50,5 +51,4 @@ public class Reserva {
         return "Reserva [cliente=" + this.cliente + ", diaFim=" + this.diaFim + ", diaInicio=" + this.diaInicio
                 + ", quarto=" + this.quarto.getNumero() + ", status=" + this.status + "]";
     }
-
 }
