@@ -26,6 +26,7 @@ public class App {
             System.out.println("0 - Sair");
             System.out.printf("Digite o número da opção: ");
             codigo=scanner.nextInt();
+            scanner.nextLine();
             switch (codigo) {
                 case 1:
 
