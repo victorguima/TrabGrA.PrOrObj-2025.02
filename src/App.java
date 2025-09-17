@@ -27,6 +27,7 @@ public class App {
             System.out.printf("Digite o número da opção: ");
             codigo=scanner.nextInt();
             scanner.nextLine(); //consome a quebra de linha deixada pelo nextInt()
+            String cliente = "NULO"; //Inicializa a variável cliente
             switch (codigo) {
                 case 1:
                     System.out.println("=== CONSULTAR DISPONIBILIDADE ===");
@@ -105,7 +106,7 @@ public class App {
                     scanner.nextLine(); //consome a quebra de linha
                     
                     System.out.print("Digite o nome do cliente: ");
-                    String cliente = scanner.nextLine();
+                    cliente = scanner.nextLine();
                     
                     System.out.print("Digite o número do quarto: ");
                     int numeroQuarto = scanner.nextInt();
@@ -160,7 +161,7 @@ public class App {
                             System.out.println(r.getCliente()+" - Quarto "+r.getQuarto().getNumero() + ", de dias "+r.getDiaInicio()+" a "+r.getDiaFim());
                     }
                     System.out.println("Digite o nome do cliente:");
-                    String cliente = scanner.nextLine();
+                    cliente = scanner.nextLine();
                     boolean clienteEncontrado = false;
                     for(Reserva r: pousada.getReservas()){
                         if(r.getCliente().equals(cliente)){ //Checa se o nome do cliente bate com alguma reserva
