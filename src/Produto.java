@@ -30,6 +30,6 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto [codigo=" + this.codigo + ", nome=" + this.nome + ", preco=" + this.preco + "]";
+        return "Cód: " + this.codigo + " - " + this.nome + " - " + "R$" + this.preco;
     }
 }

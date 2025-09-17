@@ -26,7 +26,6 @@ public class App {
             System.out.println("0 - Sair");
             System.out.printf("Digite o número da opção: ");
             codigo=scanner.nextInt();
-            scanner.nextLine(); //consome a quebra de linha deixada pelo nextInt() //TODO: Perguntar se existe alternativa porque foi o chatgpt que sugeriu
             switch (codigo) {
                 case 1:
 
@@ -89,14 +88,14 @@ public class App {
             }
         } while(codigo != 0);
         scanner.close();
-        /* for(Quarto q: pousada.getQuartos()){ //Mostra os atributos dos quartos e seus consumos
+        for(Quarto q: pousada.getQuartos()){ //Mostra os atributos dos quartos e seus consumos
             System.out.println(q.toString());
             if(q.getConsumo().length>0){//Se o quarto tiver consumos registrados
                 System.out.println("Consumo do quarto "+q.getNumero()+":");
                 q.listaConsumo(pousada.getProdutos());
                 q.valorTotalConsumo(pousada.getProdutos());
             }
-        } */
+        }
     }
     
 }

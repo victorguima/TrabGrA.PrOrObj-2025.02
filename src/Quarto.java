@@ -67,13 +67,6 @@ public class Quarto {
 
             }
         }
-        /* for(int codProduto : p.getCodigo()){
-            for(int cod : p.getCodigo()){
-                if(cod == codProduto){
-                    System.out.println(p.toString());
-                }
-            }
-        } */
     }
     public void valorTotalConsumo(Produto[] p){
         float total = 0;
