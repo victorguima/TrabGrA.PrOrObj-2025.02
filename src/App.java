@@ -14,7 +14,6 @@ public class App {
         int codigo=0; //Precisa declarar fora do loop pra poder usar no while
         do{
             System.out.println("Bem vindo à Pousada Pou Usada!"); //TODO: Pensar num trocadilho melhor.
-            System.out.println("Selecione a opção desejada: MÊS:DEZEMBRO/2025"); //mês podia ser uma variável;
             System.out.println("1 - Consultar Disponibilidade");
             System.out.println("2 - Consultar Reserva");
             System.out.println("3 - Realizar Reserva");
