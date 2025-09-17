@@ -54,20 +54,26 @@ public class Quarto {
         }
     }
 
-    //TODO: Como fazer listaConsumo() e valorTotalConsumo() se os produtos estão na classe Pousada?
-
     public void limpaConsumo() {
         this.consumo = new int[5]; //reinicializa o vetor consumo com tamanho 5
         this.nConsumo = 0; //reinicializa o contador de itens consumidos
     }
-    public void listaConsumo(Pousada p){
-        for(int codProduto : this.getConsumo()){
-            for(Produto prod : p.getProdutos()){
-                if(prod.getCodigo() == codProduto){
-                    System.out.println(prod.toString());
+    public void listaConsumo(Produto[] p){ //TODO: Receber objeto Produto em vez de Pousada
+        for(Produto produto : p){
+            for(int cod : this.getConsumo()){
+                if(produto.getCodigo() == cod){
+                    System.out.println(produto.toString());
                 }
+
             }
         }
+        /* for(int codProduto : p.getCodigo()){
+            for(int cod : p.getCodigo()){
+                if(cod == codProduto){
+                    System.out.println(p.toString());
+                }
+            }
+        } */
     }
     public void valorTotalConsumo(Pousada p){
         float total = 0;

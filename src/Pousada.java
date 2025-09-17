@@ -86,7 +86,7 @@ public class Pousada {
                 int nReservas=0; //contador para o número de reservas lidas
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.reservas.length; i++) {
-                    this.reservas[i]=new Reserva(); //TODO: Perguntar porque não funciona sem isso
+                    this.reservas[i]=new Reserva();
                     this.reservas[i].setDiaInicio(Integer.parseInt(Reserva_atributos[j++]));
                     this.reservas[i].setDiaFim(Integer.parseInt(Reserva_atributos[j++]));
                     this.reservas[i].setCliente(Reserva_atributos[j++]);
@@ -133,7 +133,7 @@ public class Pousada {
                 this.quartos = new Quarto[this.nQuartos];//inicializa o vetor de quartos com o número de quartos lido
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.nQuartos; i++) {
-                    this.quartos[i]=new Quarto(); //TODO: Perguntar porque não funciona sem isso
+                    this.quartos[i]=new Quarto();
                     this.quartos[i].setNumero(Integer.parseInt(Quarto_atributos[j++]));
                     this.quartos[i].setCategoria(Quarto_atributos[j++].charAt(0));
                     this.quartos[i].setDiaria(Float.parseFloat(Quarto_atributos[j++]));
@@ -169,7 +169,7 @@ public class Pousada {
                 int nProdutos=0; //contador para o número de produtos lidos
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.produtos.length; i++) {
-                    this.produtos[i]=new Produto(); //TODO: Perguntar porque não funciona sem isso
+                    this.produtos[i]=new Produto();
                     this.produtos[i].setCodigo(Integer.parseInt(Produto_atributos[j++]));
                     this.produtos[i].setNome(Produto_atributos[j++]);
                     this.produtos[i].setPreco(Float.parseFloat(Produto_atributos[j++]));
