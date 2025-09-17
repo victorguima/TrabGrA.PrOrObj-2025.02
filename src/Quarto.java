@@ -60,8 +60,8 @@ public class Quarto {
     }
     public void listaConsumo(Produto[] p){ //TODO: Receber objeto Produto em vez de Pousada
         for(Produto produto : p){
-            for(int cod : this.getConsumo()){
-                if(produto.getCodigo() == cod){
+            for(int codProduto : this.getConsumo()){
+                if(produto.getCodigo() == codProduto){
                     System.out.println(produto.toString());
                 }
 
@@ -75,10 +75,10 @@ public class Quarto {
             }
         } */
     }
-    public void valorTotalConsumo(Pousada p){
+    public void valorTotalConsumo(Produto[] p){
         float total = 0;
         for(int codProduto : this.getConsumo()){
-            for(Produto prod : p.getProdutos()){
+            for(Produto prod : p){
                 if(prod.getCodigo() == codProduto){
                     total += prod.getPreco();
                 }

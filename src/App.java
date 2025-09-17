@@ -26,7 +26,7 @@ public class App {
             System.out.println("0 - Sair");
             System.out.printf("Digite o número da opção: ");
             codigo=scanner.nextInt();
-            scanner.nextLine(); //consome a quebra de linha deixada pelo nextInt()
+            scanner.nextLine(); //consome a quebra de linha deixada pelo nextInt() //TODO: Perguntar se existe alternativa porque foi o chatgpt que sugeriu
             switch (codigo) {
                 case 1:
 
@@ -34,7 +34,7 @@ public class App {
                 case 7:
                     System.out.println("Clientes que já fizeram check-in:");
                     for(Reserva r : pousada.getReservas()){
-                        if(r.getStatus()=='I') //Mostra apenas reservas com check-in realizado TESTE
+                        if(r.getStatus()=='I') //Mostra apenas reservas com check-in realizado
                             System.out.println(r.getCliente()+" - Quarto "+r.getQuarto().getNumero() + ", de dias "+r.getDiaInicio()+" a "+r.getDiaFim());
                     }
                     System.out.println("Digite o nome do cliente:");
@@ -89,14 +89,14 @@ public class App {
             }
         } while(codigo != 0);
         scanner.close();
-        for(Quarto q: pousada.getQuartos()){ //Mostra o consumo de todos os quartos
+        /* for(Quarto q: pousada.getQuartos()){ //Mostra os atributos dos quartos e seus consumos
             System.out.println(q.toString());
             if(q.getConsumo().length>0){//Se o quarto tiver consumos registrados
                 System.out.println("Consumo do quarto "+q.getNumero()+":");
                 q.listaConsumo(pousada.getProdutos());
-                q.valorTotalConsumo(pousada);
+                q.valorTotalConsumo(pousada.getProdutos());
             }
-        }
+        } */
     }
     
 }
