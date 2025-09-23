@@ -54,9 +54,36 @@ public class Quarto {
         }
     }
 
+    public void limpaConsumo() {
+        this.consumo = new int[5]; //reinicializa o vetor consumo com tamanho 5
+        this.nConsumo = 0; //reinicializa o contador de itens consumidos
+    }
+    public void listaConsumo(Produto[] p){ //TODO: Receber objeto Produto em vez de Pousada
+        for(Produto produto : p){
+            for(int codProduto : this.getConsumo()){
+                if(produto.getCodigo() == codProduto){
+                    System.out.println(produto.toString());
+                }
+
+            }
+        }
+    }
+    public void valorTotalConsumo(Produto[] p){
+        float total = 0;
+        for(int codProduto : this.getConsumo()){
+            for(Produto prod : p){
+                if(prod.getCodigo() == codProduto){
+                    total += prod.getPreco();
+                }
+            }
+        }
+        System.out.printf("Valor total do consumo: R$ %.2f\n", total);
+    }
+    
+
     @Override
     public String toString() {
-        return "Quarto " + this.numero + ":" + "[categoria=" + this.categoria + ", consumo=" + 
-        Arrays.toString(this.consumo) + ", diaria=" + this.diaria + "]";
+        return "Quarto " + this.numero + ": " + "categoria: " + this.categoria + ", diária: R$" + this.diaria
+        + " Vetor consumo:" +  Arrays.toString(this.consumo);
     }
 }

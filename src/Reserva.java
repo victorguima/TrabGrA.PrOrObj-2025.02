@@ -3,7 +3,7 @@ public class Reserva {
     private int diaFim;
     private String cliente;
     private Quarto quarto;
-    private char status; //A - Ativa, C - Cancelada, I - Check-In, O - Check-Out
+    private char status; //A - Ativa, C - Cancelada, I - Realizou Check-in, O - Realizou Check-out
 
     // Construtor com parâmetros - inicializa todos os atributos da reserva
     Reserva(int diaInicio, int diaFim, String cliente, Quarto quarto, char status){
@@ -70,7 +70,7 @@ public class Reserva {
     // Converte o objeto Reserva em texto para exibição - usado pelo println()
     @Override
     public String toString() {
-        return "Reserva [cliente=" + this.cliente + ", diaFim=" + this.diaFim + ", diaInicio=" + this.diaInicio
-                + ", quarto=" + this.quarto.getNumero() + ", status=" + this.status + "]";
+        return "Reserva do cliente " + this.cliente + ": Dias " + this.diaInicio + " a " + this.diaFim
+                + ", quarto " + this.quarto.getNumero() + ", status " + this.status;
     }
 }

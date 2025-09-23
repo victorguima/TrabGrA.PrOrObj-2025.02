@@ -106,21 +106,31 @@ public class Pousada {
         }
         
         if (quartoDesejado == null) {
+            System.out.println("Quarto não encontrado.");
             return false;
         }
-
+        boolean clienteTemReserva = false;
         for (Reserva r : this.reservas) {
             if (r.getCliente().equals(cliente) && 
                 (r.getStatus() == 'A' || r.getStatus() == 'I')) {
-                return false;
+                clienteTemReserva = true;
             }
         }
-
+        if(clienteTemReserva){
+            System.out.println("Cliente já possui reserva ativa ou em check-in");
+            return false;
+        }
+        boolean disponivel = true;
         for (int dia = diaInicio; dia <= diaFim; dia++) {
             if (!consultaDisponibilidade(dia, numeroQuarto)) {
-                return false;
+                disponivel = false;
             }
         }
+        if (!disponivel) {
+            System.out.println("Quarto não disponível para o período solicitado.");
+            return false;
+        }
+
 
         Reserva novaReserva = new Reserva();
         novaReserva.setDiaInicio(diaInicio);
@@ -165,6 +175,41 @@ public class Pousada {
         }
         
         return false; // Não encontrou reserva ativa para o cliente
+    }
+
+    public void realizaCheckIn(String cliente) {
+        if (this.reservas == null) {
+            System.out.println("Nenhuma reserva encontrada.");
+            return;
+        }
+        
+        for (Reserva r : this.reservas) {
+            if (r != null && r.getCliente().equalsIgnoreCase(cliente) && r.getStatus() == 'A') {
+                r.setStatus('I'); // Muda o status para Check-In
+                System.out.println("Check-in realizado com sucesso para " + cliente);
+                System.out.println("Detalhes da reserva: " + r.toString());
+                return;
+            }
+        }
+        
+        System.out.println("Nenhuma reserva ativa encontrada para o cliente: " + cliente);
+    }
+    public void realizaCheckOut(String cliente) {
+        if (this.reservas == null) {
+            System.out.println("Nenhuma reserva encontrada.");
+            return;
+        }
+        
+        for (Reserva r : this.reservas) {
+            if (r != null && r.getCliente().equalsIgnoreCase(cliente) && r.getStatus() == 'I') {
+                r.setStatus('O'); // Muda o status para Check-Out
+                System.out.println("Check-out realizado com sucesso para " + cliente);
+                System.out.println("Detalhes da reserva: " + r.toString());
+                return;
+            }
+        }
+        
+        System.out.println("Nenhuma reserva com check-in encontrado para o cliente: " + cliente);
     }
 
     public void carregaDados(){
@@ -252,7 +297,7 @@ public class Pousada {
                 this.quartos = new Quarto[this.nQuartos];//inicializa o vetor de quartos com o número de quartos lido
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.nQuartos; i++) {
-                    this.quartos[i]=new Quarto(); //TODO: Perguntar porque não funciona sem isso
+                    this.quartos[i]=new Quarto();
                     this.quartos[i].setNumero(Integer.parseInt(Quarto_atributos[j++]));
                     this.quartos[i].setCategoria(Quarto_atributos[j++].charAt(0));
                     this.quartos[i].setDiaria(Float.parseFloat(Quarto_atributos[j++]));
@@ -312,5 +357,44 @@ public class Pousada {
             System.out.println("Erro ao acessar arquivo de produtos.");
             e.printStackTrace();
         }
+    }
+    public void salvaDados(){
+        File arqReservas = new File("reserva2.txt");
+        try {
+            BufferedWriter bwReservasTxt = new BufferedWriter(new FileWriter(arqReservas));
+            if(this.reservas != null){
+                for(int i=0; i<this.reservas.length; i++){
+                    if(this.reservas[i] != null){
+                        if(this.reservas[i].getStatus() != ('C' | 'O')){ //Salva apenas reservas que não foram canceladas ou fizeram check-out
+                            bwReservasTxt.write(this.reservas[i].getDiaInicio()+";"+this.reservas[i].getDiaFim()+";"+this.reservas[i].getCliente()+";"+this.reservas[i].getQuarto().getNumero()+";"+this.reservas[i].getStatus());
+                            bwReservasTxt.newLine();
+                        }
+                        
+                    }
+                }
+                System.out.println("Arquivo de reservas salvo com sucesso. Nome do arquivo: " + arqReservas.getName());
+            }
+            bwReservasTxt.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar arquivo de reservas.");
+            e.printStackTrace();
+        }
+
+        /* File arqQuartos = new File("quarto2.txt");
+        try {
+            BufferedWriter bwQuartosTxt = new BufferedWriter(new FileWriter(arqQuartos));
+            if(this.quartos != null){
+                for(int i=0; i<this.quartos.length; i++){
+                    if(this.quartos[i] != null){
+                        if(this.quartos[i].get() != 'O') //Não salva quartos que já fizeram check-out
+                        bwQuartosTxt.write(this.quartos[i].getNumero()+";"+this.quartos[i].getCategoria()+";"+this.quartos[i].getDiaria());
+                        bwQuartosTxt.newLine();
+                    }
+                }
+            }
+            bwQuartosTxt.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar arquivo de quartos.");
+            e.printStackTrace(); */
     }
 }
