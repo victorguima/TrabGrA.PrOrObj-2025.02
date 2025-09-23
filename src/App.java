@@ -8,7 +8,7 @@ public class App {
         int codigo=0; //Precisa declarar fora do loop pra poder usar no while
         do{
             System.out.println("Bem vindo à Pousada Pou Usada!"); //TODO: Pensar num trocadilho melhor.
-            System.out.println("Selecione a opção desejada: MÊS:DEZEMBRO/2025"); //mês podia ser uma variável;
+            System.out.println("Selecione a opção desejada: DIA:DEZEMBRO/2025"); //mês podia ser uma variável;
             System.out.println("1 - Consultar Disponibilidade");
             System.out.println("2 - Consultar Reserva");
             System.out.println("3 - Realizar Reserva");
@@ -22,27 +22,32 @@ public class App {
             codigo=scanner.nextInt();
             scanner.nextLine(); //consome a quebra de linha deixada pelo nextInt() //TODO: Perguntar se existe alternativa porque foi o chatgpt que sugeriu
             switch (codigo) {
+                // FUNÇÃO 1: CONSULTAR DISPONIBILIDADE
                 case 1:
                     System.out.println("=== CONSULTAR DISPONIBILIDADE ===");
                     System.out.print("Digite a data para consulta: ");
-                    int dataConsulta = scanner.nextInt();
+                    int dataConsulta = scanner.nextInt(); // Recebe a data do usuário
                     System.out.print("Digite o número do quarto: ");
-                    int quartoConsulta = scanner.nextInt();
+                    int quartoConsulta = scanner.nextInt(); // Recebe o número do quarto
                     
+                    // Procura o quarto no array de quartos da pousada
                     Quarto quartoEncontrado = null;
                     for (Quarto q : pousada.getQuartos()) {
                         if (q.getNumero() == quartoConsulta) {
-                            quartoEncontrado = q;
-                            break;
+                            quartoEncontrado = q; // Guarda referência do quarto encontrado
+                            break; // Sai do loop quando encontra o quarto
                         }
                     }
                     
+                    // Verifica se o quarto existe
                     if (quartoEncontrado == null) {
                         System.out.println("ERRO: Quarto " + quartoConsulta + " não existe!");
                     } else {
+                        // Chama o método para verificar disponibilidade
                         boolean disponivel = pousada.consultaDisponibilidade(dataConsulta, quartoConsulta);
                         
                         if (disponivel) {
+                            // Mostra dados do quarto disponível
                             System.out.println("QUARTO DISPONÍVEL!");
                             System.out.println("Dados do quarto:");
                             System.out.println("Número: " + quartoEncontrado.getNumero());
@@ -54,28 +59,33 @@ public class App {
                     }
                     break;
 
+                // FUNÇÃO 2: CONSULTAR RESERVA
                 case 2:
                     System.out.println("=== CONSULTAR RESERVA ===");
                     System.out.print("Digite a data: ");
-                    int dataFiltro = scanner.nextInt();
+                    int dataFiltro = scanner.nextInt(); // Recebe data para filtrar
                     
-                    scanner.nextLine(); //consome a quebra de linha deixada pelo nextInt()
+                    scanner.nextLine(); // Consome a quebra de linha deixada pelo nextInt()
                     System.out.print("Digite o nome do cliente: ");
-                    String clienteFiltro = scanner.nextLine().trim();
+                    String clienteFiltro = scanner.nextLine().trim(); // Recebe nome do cliente
                     
                     System.out.print("Digite o número do quarto: ");
-                    int quartoFiltro = scanner.nextInt();
+                    int quartoFiltro = scanner.nextInt(); // Recebe número do quarto
                     
+                    // Valida se todos os campos foram preenchidos
                     if (dataFiltro <= 0 || clienteFiltro.isEmpty() || quartoFiltro <= 0) {
                         System.out.println("ERRO: Opção inválida. Todos os campos são obrigatórios.");
                         break;
                     }
                     
+                    // Chama método de consulta com os filtros informados
                     Reserva[] reservasEncontradas = pousada.consultaReserva(dataFiltro, clienteFiltro, quartoFiltro);
                     
+                    // Verifica se encontrou alguma reserva
                     if (reservasEncontradas.length == 0) {
                         System.out.println("Nenhuma reserva ativa encontrada com os critérios informados.");
                     } else {
+                        // Mostra todas as reservas encontradas
                         System.out.println("RESERVAS ENCONTRADAS:");
                         for (Reserva r : reservasEncontradas) {
                             System.out.println("================================");
@@ -90,27 +100,31 @@ public class App {
                     }
                     break;
                 
+                // FUNÇÃO 3: REALIZAR RESERVA
                 case 3:
                     System.out.println("=== REALIZAR RESERVA ===");
                     System.out.print("Digite o dia de início da reserva: ");
-                    int diaInicio = scanner.nextInt();
+                    int diaInicio = scanner.nextInt(); // Recebe data de início
                     System.out.print("Digite o dia de fim da reserva: ");
-                    int diaFim = scanner.nextInt();
-                    scanner.nextLine(); //consome a quebra de linha
+                    int diaFim = scanner.nextInt(); // Recebe data de fim
+                    scanner.nextLine(); // Consome a quebra de linha
                     
                     System.out.print("Digite o nome do cliente: ");
-                    String cliente = scanner.nextLine();
+                    String cliente = scanner.nextLine(); // Recebe nome do cliente
                     
                     System.out.print("Digite o número do quarto: ");
-                    int numeroQuarto = scanner.nextInt();
+                    int numeroQuarto = scanner.nextInt(); // Recebe número do quarto
                     
+                    // Valida se as datas fazem sentido
                     if (diaFim < diaInicio) {
                         System.out.println("ERRO: Data de fim deve ser posterior à data de início!");
                         break;
                     }
                     
+                    // Tenta realizar a reserva
                     boolean reservaRealizada = pousada.realizaReserva(diaInicio, diaFim, cliente, numeroQuarto);
                     
+                    // Mostra resultado da operação
                     if (reservaRealizada) {
                         System.out.println("SUCESSO: Reserva realizada com sucesso!");
                         System.out.println("Cliente: " + cliente);
@@ -125,13 +139,16 @@ public class App {
                     }
                     break;
 
+                // FUNÇÃO 4: CANCELAR RESERVA
                 case 4:
                     System.out.println("=== CANCELAR RESERVA ===");
                     System.out.print("Digite o nome do cliente: ");
-                    String clienteCancelamento = scanner.nextLine();
+                    String clienteCancelamento = scanner.nextLine(); // Recebe nome do cliente
                     
+                    // Tenta cancelar a reserva do cliente
                     boolean reservaCancelada = pousada.cancelaReserva(clienteCancelamento);
                     
+                    // Mostra resultado da operação
                     if (reservaCancelada) {
                         System.out.println("SUCESSO: Reserva cancelada com sucesso!");
                     } else {

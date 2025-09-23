@@ -64,7 +64,7 @@ public class Pousada {
         int count = 0;
         
         for (Reserva r : this.reservas) {
-            if (r.getStatus() == 'A') {
+            if (r.getStatus() == 'A' || r.getStatus() == 'I') { // Mostra reservas Ativas e em Check-In
                 boolean corresponde = true;
                 
                 if (data < r.getDiaInicio() || data > r.getDiaFim()) {
