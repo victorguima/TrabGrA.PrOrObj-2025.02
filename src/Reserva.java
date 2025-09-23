@@ -48,7 +48,7 @@ public class Reserva {
 
     @Override
     public String toString() {
-        return "Reserva [cliente=" + this.cliente + ", diaFim=" + this.diaFim + ", diaInicio=" + this.diaInicio
-                + ", quarto=" + this.quarto.getNumero() + ", status=" + this.status + "]";
+        return "Reserva do cliente " + this.cliente + ": Dias " + this.diaInicio + " a " + this.diaFim
+                + ", quarto " + this.quarto.getNumero() + ", status " + this.status;
     }
 }

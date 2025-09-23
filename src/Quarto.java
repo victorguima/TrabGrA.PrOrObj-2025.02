@@ -83,7 +83,7 @@ public class Quarto {
 
     @Override
     public String toString() {
-        return "Quarto " + this.numero + ":" + "[categoria=" + this.categoria + ", consumo=" + 
-        Arrays.toString(this.consumo) + ", diaria=" + this.diaria + "]";
+        return "Quarto " + this.numero + ": " + "categoria: " + this.categoria + ", diária: R$" + this.diaria
+        + " Vetor consumo:" +  Arrays.toString(this.consumo);
     }
 }
