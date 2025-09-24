@@ -203,6 +203,7 @@ public class Pousada {
         for (Reserva r : this.reservas) {
             if (r != null && r.getCliente().equalsIgnoreCase(cliente) && r.getStatus() == 'I') {
                 r.setStatus('O'); // Muda o status para Check-Out
+                r.getQuarto().limpaConsumo(); //Limpa o consumo do quarto
                 System.out.println("Check-out realizado com sucesso para " + cliente);
                 System.out.println("Detalhes da reserva: " + r.toString());
                 return;
@@ -250,7 +251,7 @@ public class Pousada {
                 int nReservas=0; //contador para o número de reservas lidas
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.reservas.length; i++) {
-                    this.reservas[i]=new Reserva(); //TODO: Perguntar porque não funciona sem isso
+                    this.reservas[i]=new Reserva();
                     this.reservas[i].setDiaInicio(Integer.parseInt(Reserva_atributos[j++]));
                     this.reservas[i].setDiaFim(Integer.parseInt(Reserva_atributos[j++]));
                     this.reservas[i].setCliente(Reserva_atributos[j++]);
@@ -301,6 +302,23 @@ public class Pousada {
                     this.quartos[i].setNumero(Integer.parseInt(Quarto_atributos[j++]));
                     this.quartos[i].setCategoria(Quarto_atributos[j++].charAt(0));
                     this.quartos[i].setDiaria(Float.parseFloat(Quarto_atributos[j++]));
+                    //String teste = Quarto_atributos[j];
+                    String VetorConsumo[] = Quarto_atributos[j].split(",");
+                    System.out.println("Consumo lido: " + Arrays.toString(VetorConsumo));
+                    
+                    int[] codigos = new int[(VetorConsumo.length)];
+                    int k=0;
+                    for(String cod : VetorConsumo){
+                        if(Integer.parseInt(cod)!=0)
+                            codigos[k++] = Integer.parseInt(cod);
+
+                    }
+                    this.quartos[i].setConsumo(codigos);
+                    
+                    
+                    
+
+                    
                     linha=brQuartosTxt.readLine();//tenta ler a próxima linha do arquivo
                     if(linha==null) break; //se a linha for nula, sai do loop
                     else Quarto_atributos=linha.split(";");
@@ -333,7 +351,7 @@ public class Pousada {
                 int nProdutos=0; //contador para o número de produtos lidos
                 int j=0;//contador para percorrer o vetor de atributos em cada linha
                 for (int i = 0; i < this.produtos.length; i++) {
-                    this.produtos[i]=new Produto(); //TODO: Perguntar porque não funciona sem isso
+                    this.produtos[i]=new Produto(); 
                     this.produtos[i].setCodigo(Integer.parseInt(Produto_atributos[j++]));
                     this.produtos[i].setNome(Produto_atributos[j++]);
                     this.produtos[i].setPreco(Float.parseFloat(Produto_atributos[j++]));
@@ -380,14 +398,20 @@ public class Pousada {
             e.printStackTrace();
         }
 
-        /* File arqQuartos = new File("quarto2.txt");
+        File arqQuartos = new File("quarto2.txt");
         try {
             BufferedWriter bwQuartosTxt = new BufferedWriter(new FileWriter(arqQuartos));
-            if(this.quartos != null){
+            if(this.quartos != null){ //Testa se existem quartos
                 for(int i=0; i<this.quartos.length; i++){
                     if(this.quartos[i] != null){
-                        if(this.quartos[i].get() != 'O') //Não salva quartos que já fizeram check-out
-                        bwQuartosTxt.write(this.quartos[i].getNumero()+";"+this.quartos[i].getCategoria()+";"+this.quartos[i].getDiaria());
+                        bwQuartosTxt.write(this.quartos[i].getNumero()+";"+this.quartos[i].getCategoria()+";"+(int)this.quartos[i].getDiaria()+";"); // Escreve os 3 primeiros atributos do quarto                     
+                        for(int j=0; j<this.quartos[i].getConsumo().length; j++){// Escreve o vetor de consumo do quarto
+                            if(this.quartos[i].getConsumo()[j] != 0) //Não salva códigos nulos
+                                bwQuartosTxt.write(Integer.toString(this.quartos[i].getConsumo()[j]));
+                            if(j != this.quartos[i].getConsumo().length - 1){
+                                bwQuartosTxt.write(","); //Adiciona vírgula entre os códigos, mas não no final
+                            }
+                        }
                         bwQuartosTxt.newLine();
                     }
                 }
@@ -395,6 +419,7 @@ public class Pousada {
             bwQuartosTxt.close();
         } catch (Exception e) {
             System.out.println("Erro ao salvar arquivo de quartos.");
-            e.printStackTrace(); */
+            e.printStackTrace();
+        }
     }
 }

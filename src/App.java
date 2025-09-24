@@ -37,7 +37,7 @@ public class App {
                     }
                     System.out.print("Digite a data para consulta: ");
                     int dataConsulta = scanner.nextInt();
-                    if(dataConsulta <= 0 || dataConsulta > 31){ //Validação simples de data
+                    if(dataConsulta < 1 || dataConsulta > 31){ //Validação simples de data
                         System.out.println("ERRO: Data inválida!");
                         System.out.println("Pressione qualquer tecla para continuar...");
                         scanner.nextLine(); //consome \n

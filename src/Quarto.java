@@ -11,7 +11,7 @@ public class Quarto {
         this.numero=0;
         this.categoria=' ';
         this.diaria=0;
-        this.consumo=new int[5]; //inicializa o vetor consumo com limite 5
+        this.consumo=new int[1]; //inicializa o vetor consumo com limite 1
         this.nConsumo=0;
     }
 
@@ -40,17 +40,27 @@ public class Quarto {
     }
     public void setConsumo(int[] consumo) {
         this.consumo = consumo;
+        this.nConsumo = consumo.length; //atualiza o contador de itens consumidos
     }
     public void adicionaConsumo(int codigoProduto) {
+        /* for (int i = 0; i < consumo.length; i++) {
+            if(consumo[i] == 0) {
+                consumo[i] = codigoProduto;
+                break;
+            }
+        } */
+        if(this.consumo[0]==0){
+            this.consumo[0] = codigoProduto;
+            return;
+        } 
         if(this.nConsumo < this.consumo.length) { //verifica se há espaço no vetor
             this.consumo[this.nConsumo] = codigoProduto; //adiciona o código do produto no vetor
             this.nConsumo++; //incrementa o contador de itens consumidos
-        } else {
-            if (this.nConsumo == this.consumo.length) { //se o vetor estiver cheio
-                consumo = Arrays.copyOf(this.consumo, nConsumo*2); //redimensiona o vetor consumo para o dobro do tamanho
-                this.consumo[this.nConsumo] = codigoProduto; //adiciona o código do produto no vetor
-                this.nConsumo++; //incrementa o contador de itens consumidos
-            }
+        } 
+        else if (this.nConsumo == this.consumo.length) { //se o vetor estiver cheio {
+            consumo = Arrays.copyOf(this.consumo, nConsumo*2); //redimensiona o vetor consumo para o dobro do tamanho
+            this.consumo[this.nConsumo] = codigoProduto; //adiciona o código do produto no vetor
+            this.nConsumo++; //incrementa o contador de itens consumidos
         }
     }
 
@@ -58,7 +68,7 @@ public class Quarto {
         this.consumo = new int[5]; //reinicializa o vetor consumo com tamanho 5
         this.nConsumo = 0; //reinicializa o contador de itens consumidos
     }
-    public void listaConsumo(Produto[] p){ //TODO: Receber objeto Produto em vez de Pousada
+    public void listaConsumo(Produto[] p){
         for(Produto produto : p){
             for(int codProduto : this.getConsumo()){
                 if(produto.getCodigo() == codProduto){
