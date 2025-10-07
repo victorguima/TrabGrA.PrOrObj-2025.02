@@ -3,17 +3,17 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
         Pousada pousada = new Pousada(); //Inicializa a pousada, seu construtor carrega os dados dos arquivos
-        System.out.println(pousada.getNome()); //"NULO" se o arquivo não for encontrado
-        for(Quarto q: pousada.getQuartos()){
+        if(pousada.getNome()=="NULO") System.out.println("Erro: Pousada não foi inicializada");
+        /* for(Quarto q: pousada.getQuartos()){
             System.out.println(q.toString());
-        }
-        for(Reserva r: pousada.getReservas()){
+        } */
+        /* for(Reserva r: pousada.getReservas()){
             System.out.println(r.toString());
-        }
+        } */
         Scanner scanner = new Scanner(System.in);
         int codigo=0; //Precisa declarar fora do loop pra poder usar no while
         do{
-            System.out.println("Bem vindo à Pousada Pou Usada!"); //TODO: Pensar num trocadilho melhor.
+            System.out.println("Bem vindo à POO - Pousada Orientada a Objetos!");
             System.out.println("Selecione a opção desejada: MÊS:DEZEMBRO/2025"); //mês podia ser uma variável;
             System.out.println("1 - Consultar Disponibilidade");
             System.out.println("2 - Consultar Reserva");
@@ -32,7 +32,7 @@ public class App {
                 case 1:
                     System.out.println("=== CONSULTAR DISPONIBILIDADE ===");
                     System.out.println("Reservas registradas:");
-                    for(Reserva r: pousada.getReservas()){
+                    for(Reserva r: pousada.getReservas()){ //Mostra todas as reservas para facilitar testagem
                         System.out.println(r.toString());
                     }
                     System.out.print("Digite a data para consulta: ");
@@ -46,7 +46,6 @@ public class App {
                     }
                     System.out.print("Digite o número do quarto: ");
                     int quartoConsulta = scanner.nextInt();
-                    
                     Quarto quartoEncontrado = null;
                     for (Quarto q : pousada.getQuartos()) {
                         if (q.getNumero() == quartoConsulta) {
@@ -54,12 +53,10 @@ public class App {
                             break;
                         }
                     }
-                    
                     if (quartoEncontrado == null) {
                         System.out.println("ERRO: Quarto " + quartoConsulta + " não existe!");
                     } else {
                         boolean disponivel = pousada.consultaDisponibilidade(dataConsulta, quartoConsulta);
-                        
                         if (disponivel) {
                             System.out.println("QUARTO DISPONÍVEL!");
                             System.out.println("Dados do quarto:");
@@ -74,7 +71,6 @@ public class App {
                     scanner.nextLine(); //consome \n
                     scanner.nextLine(); //espera o usuário digitar algo
                     break;
-
                 case 2:
                     System.out.println("=== CONSULTAR RESERVA ===");
                     System.out.println("Reservas ativas encontradas:");
@@ -84,21 +80,16 @@ public class App {
                     }
                     System.out.print("Digite a data: ");
                     int dataFiltro = scanner.nextInt();
-                    
                     scanner.nextLine(); //consome a quebra de linha deixada pelo nextInt()
                     System.out.print("Digite o nome do cliente: ");
-                    String clienteFiltro = scanner.nextLine().trim();
-                    
+                    String clienteFiltro = scanner.nextLine().trim(); //Remove espaços vazios
                     System.out.print("Digite o número do quarto: ");
                     int quartoFiltro = scanner.nextInt();
-                    
                     if (dataFiltro <= 0 || clienteFiltro.isEmpty() || quartoFiltro <= 0) {
                         System.out.println("ERRO: Opção inválida. Todos os campos são obrigatórios.");
                         break;
                     }
-                    
                     Reserva[] reservasEncontradas = pousada.consultaReserva(dataFiltro, clienteFiltro, quartoFiltro);
-                    
                     if (reservasEncontradas.length == 0) {
                         System.out.println("Nenhuma reserva ativa encontrada com os critérios informados.");
                     } else {
@@ -122,9 +113,12 @@ public class App {
                 case 3:
                     System.out.println("=== REALIZAR RESERVA ===");
                     System.out.println("Reservas registradas:");
-                    for(Reserva r: pousada.getReservas()){
-                        System.out.println(r.toString());
+                    if(pousada.getReservas()!=null){
+                        for(Reserva r: pousada.getReservas()){
+                            System.out.println(r.toString());
+                        }
                     }
+                    else System.out.println("Nenhuma reserva encontrada!");
                     System.out.print("Digite o dia de início da reserva: ");
                     int diaInicio = scanner.nextInt();
                     System.out.print("Digite o dia de fim da reserva: ");
@@ -140,26 +134,9 @@ public class App {
                     
                     System.out.print("Digite o nome do cliente: ");
                     cliente = scanner.nextLine();
-                    
                     System.out.print("Digite o número do quarto: ");
                     int numeroQuarto = scanner.nextInt();
-                    
-                    
-                    
-                    boolean reservaRealizada = pousada.realizaReserva(diaInicio, diaFim, cliente, numeroQuarto);
-                    
-                    if (reservaRealizada) {
-                        System.out.println("SUCESSO: Reserva realizada com sucesso!");
-                        System.out.println("Cliente: " + cliente);
-                        System.out.println("Quarto: " + numeroQuarto);
-                        System.out.println("Período: " + diaInicio + " a " + diaFim);
-                    } else {
-                        System.out.println("FALHA: Não foi possível realizar a reserva.");
-                        System.out.println("Motivos possíveis:");
-                        System.out.println("- Quarto não existe");
-                        System.out.println("- Quarto não disponível no período solicitado");
-                        System.out.println("- Cliente já possui reserva ativa ou em check-in");
-                    }
+                    pousada.realizaReserva(diaInicio, diaFim, cliente, numeroQuarto);
                     System.out.println("Pressione qualquer tecla para continuar...");
                     scanner.nextLine(); //consome \n
                     scanner.nextLine(); //espera o usuário digitar algo
@@ -188,7 +165,7 @@ public class App {
 
                 case 5:
                     System.out.println("=== REALIZAR CHECK-IN ===");
-                    System.out.print("Digite o nome do cliente: ");
+                    System.out.println("Digite o nome do cliente: ");
                     System.out.println("Clientes com reserva ativa:");
                     for(Reserva r : pousada.getReservas()){
                         if(r.getStatus()=='A') //Mostra apenas reservas ativas
@@ -215,6 +192,7 @@ public class App {
                     break;
 
                 case 7:
+                    System.out.println("=== REGISTRAR CONSUMO ===");
                     System.out.println("Clientes que já fizeram check-in:");
                     for(Reserva r : pousada.getReservas()){
                         if(r.getStatus()=='I') //Mostra apenas reservas com check-in realizado TESTE AAAA
@@ -271,9 +249,9 @@ public class App {
                     break;
 
                 case 8:
+                    System.out.println("=== SALVAR DADOS ===");
                     pousada.salvaDados(); //Salva os dados atuais nos arquivos
                     System.out.println("Pressione qualquer tecla para continuar...");
-                    scanner.nextLine(); //consome \n
                     scanner.nextLine(); //espera o usuário digitar algo
                     break;
             

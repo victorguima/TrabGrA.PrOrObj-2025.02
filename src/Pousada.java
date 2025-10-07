@@ -96,7 +96,7 @@ public class Pousada {
         return Arrays.copyOf(resultados, count);
     }
 
-    public boolean realizaReserva(int diaInicio, int diaFim, String cliente, int numeroQuarto) {
+    public void realizaReserva(int diaInicio, int diaFim, String cliente, int numeroQuarto) {
         Quarto quartoDesejado = null;
         for (Quarto q : this.quartos) {
             if (q.getNumero() == numeroQuarto) {
@@ -106,32 +106,20 @@ public class Pousada {
         }
         
         if (quartoDesejado == null) {
-            System.out.println("Quarto não encontrado.");
-            return false;
+            System.out.println("ERRO: Quarto não encontrado.");
         }
-        boolean clienteTemReserva = false;
         for (Reserva r : this.reservas) {
             if (r.getCliente().equals(cliente) && 
                 (r.getStatus() == 'A' || r.getStatus() == 'I')) {
-                clienteTemReserva = true;
+                System.out.println("ERRO: Cliente já possui reserva ativa ou em check-in");
             }
         }
-        if(clienteTemReserva){
-            System.out.println("Cliente já possui reserva ativa ou em check-in");
-            return false;
-        }
-        boolean disponivel = true;
+       
         for (int dia = diaInicio; dia <= diaFim; dia++) {
             if (!consultaDisponibilidade(dia, numeroQuarto)) {
-                disponivel = false;
+                System.out.println("ERRO: Quarto não disponível para o período solicitado.");
             }
         }
-        if (!disponivel) {
-            System.out.println("Quarto não disponível para o período solicitado.");
-            return false;
-        }
-
-
         Reserva novaReserva = new Reserva();
         novaReserva.setDiaInicio(diaInicio);
         novaReserva.setDiaFim(diaFim);
@@ -159,7 +147,7 @@ public class Pousada {
             }
         }
 
-        return true;
+        //return true;
     }
 
     public boolean cancelaReserva(String cliente) {
@@ -182,7 +170,6 @@ public class Pousada {
             System.out.println("Nenhuma reserva encontrada.");
             return;
         }
-        
         for (Reserva r : this.reservas) {
             if (r != null && r.getCliente().equalsIgnoreCase(cliente) && r.getStatus() == 'A') {
                 r.setStatus('I'); // Muda o status para Check-In
@@ -277,6 +264,7 @@ public class Pousada {
             }
             else{
                 System.out.println("Arquivo de reservas não encontrado.");
+                //this.reservas = new Reserva[1]; //Inicializa vetor com uma posição
             }
         }catch(Exception e){   
             System.out.println("Erro ao acessar arquivo de reservas.");
@@ -302,10 +290,8 @@ public class Pousada {
                     this.quartos[i].setNumero(Integer.parseInt(Quarto_atributos[j++]));
                     this.quartos[i].setCategoria(Quarto_atributos[j++].charAt(0));
                     this.quartos[i].setDiaria(Float.parseFloat(Quarto_atributos[j++]));
-                    //String teste = Quarto_atributos[j];
                     String VetorConsumo[] = Quarto_atributos[j].split(",");
-                    System.out.println("Consumo lido: " + Arrays.toString(VetorConsumo));
-                    
+                    //System.out.println("Consumo lido na pos " + i + " : " + Arrays.toString(VetorConsumo));
                     int[] codigos = new int[(VetorConsumo.length)];
                     int k=0;
                     for(String cod : VetorConsumo){
@@ -314,11 +300,6 @@ public class Pousada {
 
                     }
                     this.quartos[i].setConsumo(codigos);
-                    
-                    
-                    
-
-                    
                     linha=brQuartosTxt.readLine();//tenta ler a próxima linha do arquivo
                     if(linha==null) break; //se a linha for nula, sai do loop
                     else Quarto_atributos=linha.split(";");
@@ -377,7 +358,7 @@ public class Pousada {
         }
     }
     public void salvaDados(){
-        File arqReservas = new File("reserva2.txt");
+        File arqReservas = new File("reserva.txt");
         try {
             BufferedWriter bwReservasTxt = new BufferedWriter(new FileWriter(arqReservas));
             if(this.reservas != null){
@@ -398,20 +379,22 @@ public class Pousada {
             e.printStackTrace();
         }
 
-        File arqQuartos = new File("quarto2.txt");
+        File arqQuartos = new File("quarto.txt");
         try {
             BufferedWriter bwQuartosTxt = new BufferedWriter(new FileWriter(arqQuartos));
             if(this.quartos != null){ //Testa se existem quartos
                 for(int i=0; i<this.quartos.length; i++){
                     if(this.quartos[i] != null){
                         bwQuartosTxt.write(this.quartos[i].getNumero()+";"+this.quartos[i].getCategoria()+";"+(int)this.quartos[i].getDiaria()+";"); // Escreve os 3 primeiros atributos do quarto                     
+                        
                         for(int j=0; j<this.quartos[i].getConsumo().length; j++){// Escreve o vetor de consumo do quarto
-                            if(this.quartos[i].getConsumo()[j] != 0) //Não salva códigos nulos
+                            //if(this.quartos[i].getConsumo()[j] != 0) //Não salva códigos nulos
                                 bwQuartosTxt.write(Integer.toString(this.quartos[i].getConsumo()[j]));
                             if(j != this.quartos[i].getConsumo().length - 1){
                                 bwQuartosTxt.write(","); //Adiciona vírgula entre os códigos, mas não no final
                             }
                         }
+                        
                         bwQuartosTxt.newLine();
                     }
                 }
