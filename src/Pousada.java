@@ -1,4 +1,3 @@
-import java.io.BufferedReader;
 import java.util.Arrays;
 import java.io.*;
 
@@ -96,7 +95,7 @@ public class Pousada {
         return Arrays.copyOf(resultados, count);
     }
 
-    public void realizaReserva(int diaInicio, int diaFim, String cliente, int numeroQuarto) {
+    public boolean realizaReserva(int diaInicio, int diaFim, String cliente, int numeroQuarto) {
         Quarto quartoDesejado = null;
         for (Quarto q : this.quartos) {
             if (q.getNumero() == numeroQuarto) {
@@ -107,18 +106,24 @@ public class Pousada {
         
         if (quartoDesejado == null) {
             System.out.println("ERRO: Quarto não encontrado.");
+            return false;
         }
         for (Reserva r : this.reservas) {
             if (r.getCliente().equals(cliente) && 
                 (r.getStatus() == 'A' || r.getStatus() == 'I')) {
                 System.out.println("ERRO: Cliente já possui reserva ativa ou em check-in");
+                return  false;
             }
         }
-       
+       boolean disponivel = true;
         for (int dia = diaInicio; dia <= diaFim; dia++) {
             if (!consultaDisponibilidade(dia, numeroQuarto)) {
-                System.out.println("ERRO: Quarto não disponível para o período solicitado.");
+                disponivel = false;
             }
+        }
+        if (!disponivel) {
+            System.out.println("Quarto não disponível para o período solicitado.");
+            return false; 
         }
         Reserva novaReserva = new Reserva();
         novaReserva.setDiaInicio(diaInicio);
@@ -147,7 +152,7 @@ public class Pousada {
             }
         }
 
-        //return true;
+        return true;
     }
 
     public boolean cancelaReserva(String cliente) {
@@ -358,7 +363,7 @@ public class Pousada {
         }
     }
     public void salvaDados(){
-        File arqReservas = new File("reserva.txt");
+        File arqReservas = new File("reserva2.txt");
         try {
             BufferedWriter bwReservasTxt = new BufferedWriter(new FileWriter(arqReservas));
             if(this.reservas != null){
@@ -379,7 +384,7 @@ public class Pousada {
             e.printStackTrace();
         }
 
-        File arqQuartos = new File("quarto.txt");
+        File arqQuartos = new File("quarto2.txt");
         try {
             BufferedWriter bwQuartosTxt = new BufferedWriter(new FileWriter(arqQuartos));
             if(this.quartos != null){ //Testa se existem quartos

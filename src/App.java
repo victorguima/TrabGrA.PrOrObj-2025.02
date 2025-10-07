@@ -124,19 +124,25 @@ public class App {
                     System.out.print("Digite o dia de fim da reserva: ");
                     int diaFim = scanner.nextInt();
                     scanner.nextLine(); //consome a quebra de linha
-
                     if (diaFim < diaInicio) {
                         System.out.println("ERRO: Data de fim deve ser posterior à data de início!");
                         System.out.println("Pressione qualquer tecla para continuar...");
                         scanner.nextLine(); //espera o usuário digitar algo
                         break;
                     }
-                    
                     System.out.print("Digite o nome do cliente: ");
                     cliente = scanner.nextLine();
                     System.out.print("Digite o número do quarto: ");
                     int numeroQuarto = scanner.nextInt();
-                    pousada.realizaReserva(diaInicio, diaFim, cliente, numeroQuarto);
+                    boolean reservaRealizada = pousada.realizaReserva(diaInicio, diaFim, cliente, numeroQuarto);
+                    if (reservaRealizada) {
+                        System.out.println("SUCESSO: Reserva realizada com sucesso!");
+                        System.out.println("Cliente: " + cliente);
+                        System.out.println("Quarto: " + numeroQuarto);
+                        System.out.println("Período: " + diaInicio + " a " + diaFim);
+                    } else {
+                        System.out.println("FALHA: Não foi possível realizar a reserva.");
+                    }
                     System.out.println("Pressione qualquer tecla para continuar...");
                     scanner.nextLine(); //consome \n
                     scanner.nextLine(); //espera o usuário digitar algo
