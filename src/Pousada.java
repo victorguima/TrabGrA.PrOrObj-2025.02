@@ -363,7 +363,7 @@ public class Pousada {
         }
     }
     public void salvaDados(){
-        File arqReservas = new File("reserva2.txt");
+        File arqReservas = new File("reserva.txt");
         try {
             BufferedWriter bwReservasTxt = new BufferedWriter(new FileWriter(arqReservas));
             if(this.reservas != null){
@@ -384,7 +384,7 @@ public class Pousada {
             e.printStackTrace();
         }
 
-        File arqQuartos = new File("quarto2.txt");
+        File arqQuartos = new File("quarto.txt");
         try {
             BufferedWriter bwQuartosTxt = new BufferedWriter(new FileWriter(arqQuartos));
             if(this.quartos != null){ //Testa se existem quartos
